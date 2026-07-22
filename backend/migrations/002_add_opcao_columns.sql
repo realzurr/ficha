@@ -1,0 +1,11 @@
+ALTER TABLE fichas_anamnese ADD COLUMN diagnostico_doenca_fisica_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN cirurgias_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN doenca_cardiaca_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN pressao_arterial_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN convulsoes_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN cirurgia_bariatrica_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN diagnostico_doenca_psiquiatrica_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN diagnostico_esquizofrenia_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN tentativas_suicidio_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN uso_substancias_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN consumo_alcool_opcao TEXT;

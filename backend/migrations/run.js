@@ -12,12 +12,17 @@ if (!fs.existsSync(dataDir)) {
 
 const db = new Database(DB_PATH);
 
-// Ler e executar migrações
-const migrationFile = path.join(__dirname, '001_create_fichas.sql');
-const migration = fs.readFileSync(migrationFile, 'utf8');
+// Executar todas as migrations .sql em ordem
+const migrationFiles = fs.readdirSync(__dirname)
+  .filter(f => f.endsWith('.sql'))
+  .sort();
 
-console.log('Executando migrações...');
-db.exec(migration);
+for (const file of migrationFiles) {
+  const migration = fs.readFileSync(path.join(__dirname, file), 'utf8');
+  console.log(`Executando ${file}...`);
+  db.exec(migration);
+}
+
 console.log('Migrações concluídas com sucesso!');
 
 db.close();

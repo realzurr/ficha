@@ -24,7 +24,7 @@ const validColumns = db.prepare("PRAGMA table_info(fichas_anamnese)").all().map(
 function filterValidColumns(data) {
   const filtered = {};
   for (const key of Object.keys(data)) {
-    if (validColumns.includes(key) && !key.endsWith('_opcao')) {
+    if (validColumns.includes(key)) {
       filtered[key] = data[key];
     }
   }

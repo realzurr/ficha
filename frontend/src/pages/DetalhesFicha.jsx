@@ -122,11 +122,17 @@ function DetalhesFicha() {
         ['Menstruação Regular', ficha?.menstruacao_regular, 'menstruacao_regular'],
         ['Suspeita de Gravidez', ficha?.suspeita_gravidez, 'suspeita_gravidez'],
         ['Detalhes Gravidez', ficha?.detalhes_gravidez, 'detalhes_gravidez', 'textarea'],
+        ['Diagnóstico Doença Física?', ficha?.diagnostico_doenca_fisica_opcao, 'diagnostico_doenca_fisica_opcao'],
         ['Diagnóstico Doença Física', ficha?.diagnostico_doenca_fisica, 'diagnostico_doenca_fisica', 'textarea'],
+        ['Realizou Cirurgia?', ficha?.cirurgias_opcao, 'cirurgias_opcao'],
         ['Cirurgias', ficha?.cirurgias, 'cirurgias', 'textarea'],
+        ['Tem Doença Cardíaca?', ficha?.doenca_cardiaca_opcao, 'doenca_cardiaca_opcao'],
         ['Doença Cardíaca', ficha?.doenca_cardiaca, 'doenca_cardiaca', 'textarea'],
+        ['Problema de Pressão?', ficha?.pressao_arterial_opcao, 'pressao_arterial_opcao'],
         ['Pressão Arterial', ficha?.pressao_arterial, 'pressao_arterial', 'textarea'],
+        ['Já Teve Convulsão?', ficha?.convulsoes_opcao, 'convulsoes_opcao'],
         ['Convulsões', ficha?.convulsoes, 'convulsoes', 'textarea'],
+        ['Fez Cirurgia Bariátrica?', ficha?.cirurgia_bariatrica_opcao, 'cirurgia_bariatrica_opcao'],
         ['Cirurgia Bariátrica', ficha?.cirurgia_bariatrica, 'cirurgia_bariatrica', 'textarea'],
       ],
     },
@@ -134,8 +140,11 @@ function DetalhesFicha() {
       title: 'Saúde Mental',
       icon: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>,
       fields: [
+        ['Tem Diagnóstico Psiquiátrico?', ficha?.diagnostico_doenca_psiquiatrica_opcao, 'diagnostico_doenca_psiquiatrica_opcao'],
         ['Diagnóstico Psiquiátrico', ficha?.diagnostico_doenca_psiquiatrica, 'diagnostico_doenca_psiquiatrica', 'textarea'],
+        ['Tem Diagnóstico Esquizofrenia?', ficha?.diagnostico_esquizofrenia_opcao, 'diagnostico_esquizofrenia_opcao'],
         ['Diagnóstico Esquizofrenia', ficha?.diagnostico_esquizofrenia, 'diagnostico_esquizofrenia', 'textarea'],
+        ['Já Tentou Suicídio?', ficha?.tentativas_suicidio_opcao, 'tentativas_suicidio_opcao'],
         ['Tentativas de Suicídio', ficha?.tentativas_suicidio, 'tentativas_suicidio', 'textarea'],
         ['Acompanhamento Psicológico', ficha?.acompanhamento_psicologico, 'acompanhamento_psicologico'],
         ['Internação Psiquiátrica', ficha?.internacao_psiquiatrica, 'internacao_psiquiatrica'],
@@ -145,10 +154,12 @@ function DetalhesFicha() {
       title: 'Substâncias',
       icon: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" /></svg>,
       fields: [
+        ['Usa Substâncias?', ficha?.uso_substancias_opcao, 'uso_substancias_opcao'],
         ['Uso de Substâncias', ficha?.uso_substancias, 'uso_substancias', 'textarea'],
         ['Dependente Químico', ficha?.dependente_quimico, 'dependente_quimico'],
         ['Conceito de Dependente', ficha?.oque_dependente_quimico, 'oque_dependente_quimico', 'textarea'],
         ['Alcoólatra', ficha?.alcoolatra, 'alcoolatra'],
+        ['Consome Álcool?', ficha?.consumo_alcool_opcao, 'consumo_alcool_opcao'],
         ['Consumo de Álcool', ficha?.consumo_alcool, 'consumo_alcool', 'textarea'],
       ],
     },
@@ -293,6 +304,10 @@ function DetalhesFicha() {
             <div>
               <dt className="text-sand-400 font-medium">IP</dt>
               <dd className="text-earth-700 mt-0.5">{ficha?.ip_address || '—'}</dd>
+            </div>
+            <div>
+              <dt className="text-sand-400 font-medium">User Agent</dt>
+              <dd className="text-earth-700 mt-0.5 break-all">{ficha?.user_agent || '—'}</dd>
             </div>
           </dl>
         </div>

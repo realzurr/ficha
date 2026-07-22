@@ -24,25 +24,36 @@ CREATE TABLE IF NOT EXISTS fichas_anamnese (
   detalhes_gravidez TEXT,
   
   -- Saúde Geral
+  diagnostico_doenca_fisica_opcao TEXT,
   diagnostico_doenca_fisica TEXT,
+  cirurgias_opcao TEXT,
   cirurgias TEXT,
+  doenca_cardiaca_opcao TEXT,
   doenca_cardiaca TEXT,
+  pressao_arterial_opcao TEXT,
   pressao_arterial TEXT,
+  convulsoes_opcao TEXT,
   convulsoes TEXT,
+  cirurgia_bariatrica_opcao TEXT,
   cirurgia_bariatrica TEXT,
   
   -- Saúde Mental
+  diagnostico_doenca_psiquiatrica_opcao TEXT,
   diagnostico_doenca_psiquiatrica TEXT,
+  diagnostico_esquizofrenia_opcao TEXT,
   diagnostico_esquizofrenia TEXT,
+  tentativas_suicidio_opcao TEXT,
   tentativas_suicidio TEXT,
   acompanhamento_psicologico TEXT,
   internacao_psiquiatrica TEXT,
   
   -- Uso de Substâncias
+  uso_substancias_opcao TEXT,
   uso_substancias TEXT,
   dependente_quimico TEXT,
   oque_dependente_quimico TEXT,
   alcoolatra TEXT,
+  consumo_alcool_opcao TEXT,
   consumo_alcool TEXT,
   
   -- Luto e Traumas
@@ -51,6 +62,7 @@ CREATE TABLE IF NOT EXISTS fichas_anamnese (
   abuso_fisico TEXT,
   detalhes_abuso_fisico TEXT,
   memorias_traumaticas_infancia TEXT,
+  detalhes_memorias_infancia TEXT,
   trauma_fase_adulta TEXT,
   detalhes_trauma_adulto TEXT,
   abuso_psicologico TEXT,
