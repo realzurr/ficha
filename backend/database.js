@@ -18,4 +18,19 @@ db.pragma('journal_mode = WAL');
 // Habilitar foreign keys
 db.pragma('foreign_keys = ON');
 
+// Obter colunas válidas da tabela
+const validColumns = db.prepare("PRAGMA table_info(fichas_anamnese)").all().map(c => c.name);
+
+function filterValidColumns(data) {
+  const filtered = {};
+  for (const key of Object.keys(data)) {
+    if (validColumns.includes(key) && !key.endsWith('_opcao')) {
+      filtered[key] = data[key];
+    }
+  }
+  return filtered;
+}
+
 module.exports = db;
+module.exports.filterValidColumns = filterValidColumns;
+module.exports.validColumns = validColumns;

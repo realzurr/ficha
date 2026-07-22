@@ -2,13 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const db = require('../database');
+const { filterValidColumns } = require('../database');
 
 // Validações
 const fichaValidation = [
-  body('nome_completo').notEmpty().withMessage('Nome é obrigatório'),
-  body('email').optional().isEmail().withMessage('Email inválido'),
-  body('cpf').optional().notEmpty(),
-  body('whatsapp').optional().notEmpty()
+  body('nome_completo').notEmpty().withMessage('Nome é obrigatório')
 ];
 
 // GET /api/fichas - Listar todas as fichas
@@ -76,29 +74,27 @@ router.post('/', fichaValidation, (req, res) => {
     
     const data = req.body;
     
-    // Remover campos auxiliares (_opcao) que não existem no banco
-    Object.keys(data).forEach((key) => {
-      if (key.endsWith('_opcao')) delete data[key];
-    });
+    // Filtrar apenas colunas válidas do banco
+    const filtered = filterValidColumns(data);
     
     // Converter arrays/objetos para JSON strings
-    if (data.transtornos_personalidade && Array.isArray(data.transtornos_personalidade)) {
-      data.transtornos_personalidade = JSON.stringify(data.transtornos_personalidade);
+    if (filtered.transtornos_personalidade && Array.isArray(filtered.transtornos_personalidade)) {
+      filtered.transtornos_personalidade = JSON.stringify(filtered.transtornos_personalidade);
     }
-    if (data.vicios && Array.isArray(data.vicios)) {
-      data.vicios = JSON.stringify(data.vicios);
+    if (filtered.vicios && Array.isArray(filtered.vicios)) {
+      filtered.vicios = JSON.stringify(filtered.vicios);
     }
-    if (data.pratica_autoconhecimento && Array.isArray(data.pratica_autoconhecimento)) {
-      data.pratica_autoconhecimento = JSON.stringify(data.pratica_autoconhecimento);
+    if (filtered.pratica_autoconhecimento && Array.isArray(filtered.pratica_autoconhecimento)) {
+      filtered.pratica_autoconhecimento = JSON.stringify(filtered.pratica_autoconhecimento);
     }
     
     // Adicionar metadados
-    data.ip_address = req.ip;
-    data.user_agent = req.get('User-Agent');
+    filtered.ip_address = req.ip;
+    filtered.user_agent = req.get('User-Agent');
     
-    const columns = Object.keys(data).join(', ');
-    const placeholders = Object.keys(data).map(() => '?').join(', ');
-    const values = Object.values(data);
+    const columns = Object.keys(filtered).join(', ');
+    const placeholders = Object.keys(filtered).map(() => '?').join(', ');
+    const values = Object.values(filtered);
     
     const result = db.prepare(
       `INSERT INTO fichas_anamnese (${columns}) VALUES (${placeholders})`
@@ -131,24 +127,23 @@ router.put('/:id', fichaValidation, (req, res) => {
     const data = req.body;
     data.updated_at = new Date().toISOString();
     
-    // Remover campos auxiliares (_opcao) que não existem no banco
-    Object.keys(data).forEach((key) => {
-      if (key.endsWith('_opcao')) delete data[key];
-    });
+    // Filtrar apenas colunas válidas do banco
+    const filtered = filterValidColumns(data);
+    filtered.updated_at = new Date().toISOString();
     
     // Converter arrays/objetos para JSON strings
-    if (data.transtornos_personalidade && Array.isArray(data.transtornos_personalidade)) {
-      data.transtornos_personalidade = JSON.stringify(data.transtornos_personalidade);
+    if (filtered.transtornos_personalidade && Array.isArray(filtered.transtornos_personalidade)) {
+      filtered.transtornos_personalidade = JSON.stringify(filtered.transtornos_personalidade);
     }
-    if (data.vicios && Array.isArray(data.vicios)) {
-      data.vicios = JSON.stringify(data.vicios);
+    if (filtered.vicios && Array.isArray(filtered.vicios)) {
+      filtered.vicios = JSON.stringify(filtered.vicios);
     }
-    if (data.pratica_autoconhecimento && Array.isArray(data.pratica_autoconhecimento)) {
-      data.pratica_autoconhecimento = JSON.stringify(data.pratica_autoconhecimento);
+    if (filtered.pratica_autoconhecimento && Array.isArray(filtered.pratica_autoconhecimento)) {
+      filtered.pratica_autoconhecimento = JSON.stringify(filtered.pratica_autoconhecimento);
     }
     
-    const setClause = Object.keys(data).map(key => `${key} = ?`).join(', ');
-    const values = [...Object.values(data), id];
+    const setClause = Object.keys(filtered).map(key => `${key} = ?`).join(', ');
+    const values = [...Object.values(filtered), id];
     
     db.prepare(`UPDATE fichas_anamnese SET ${setClause} WHERE id = ?`).run(...values);
     

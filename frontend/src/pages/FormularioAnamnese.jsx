@@ -85,8 +85,11 @@ function FormularioAnamnese() {
       await axios.post('/api/fichas', payload);
       setSubmitted(true);
       toast.success('Ficha enviada com sucesso!');
-    } catch {
-      toast.error('Erro ao enviar ficha. Tente novamente.');
+    } catch (err) {
+      const msg = err.response?.data?.errors?.[0]?.message
+        || err.response?.data?.error
+        || 'Erro ao enviar ficha. Tente novamente.';
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }
