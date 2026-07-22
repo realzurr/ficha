@@ -9,3 +9,4 @@ ALTER TABLE fichas_anamnese ADD COLUMN diagnostico_esquizofrenia_opcao TEXT;
 ALTER TABLE fichas_anamnese ADD COLUMN tentativas_suicidio_opcao TEXT;
 ALTER TABLE fichas_anamnese ADD COLUMN uso_substancias_opcao TEXT;
 ALTER TABLE fichas_anamnese ADD COLUMN consumo_alcool_opcao TEXT;
+ALTER TABLE fichas_anamnese ADD COLUMN detalhes_memorias_infancia TEXT;
