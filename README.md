@@ -133,11 +133,19 @@ npm run dev
 
 ### 5. Acessar
 
+**Desenvolvimento:**
+
 | URL | Descrição |
 |-----|-----------|
-| `http://localhost:30016` | Formulário de Anamnese |
-| `http://localhost:30016/login` | Painel Administrativo |
+| `http://localhost:30016` | Formulário de Anamnese (dev) |
+| `http://localhost:30016/login` | Painel Administrativo (dev) |
 | `http://localhost:30015/api` | API Backend |
+
+**Produção (com PM2):**
+
+| URL | Descrição |
+|-----|-----------|
+| `http://localhost:30015` | Formulário + API (tudo junto) |
 
 ---
 
@@ -197,23 +205,58 @@ openssl rand -hex 32
 
 ## Deploy em Produção
 
-### Build do Frontend
+### 1. Instalar PM2 (se ainda não tiver)
+
+```bash
+sudo npm install -g pm2
+```
+
+### 2. Build do Frontend
 
 ```bash
 cd frontend
 npm run build
 ```
 
-### Iniciar com PM2
+### 3. Criar arquivo .env
 
 ```bash
 cd backend
+cat > .env << EOF
+NODE_ENV=production
+PORT=30015
+FRONTEND_URL=http://localhost:30015
+JWT_SECRET=$(openssl rand -hex 32)
+EOF
+```
+
+### 4. Criar admin (se ainda não tiver)
+
+```bash
+node create-admin.js
+```
+
+### 5. Iniciar com PM2
+
+```bash
 pm2 start server.js --name anamnese-tenda
 pm2 save
 pm2 startup
 ```
 
-### Configurar Nginx (Opcional)
+O último comando vai gerar um comando para copiar e colar — faça isso para o PM2 iniciar com o sistema.
+
+### 6. Verificar
+
+```bash
+pm2 status
+pm2 logs anamnese-tenda
+```
+
+> **Em produção, o backend serve o frontend diretamente.**
+> Tudo roda na porta **30015**. A porta 30016 é apenas para desenvolvimento.
+
+### 7. Configurar Nginx (Opcional)
 
 ```bash
 sudo cp nginx-anamnese.conf /etc/nginx/sites-available/anamnese
